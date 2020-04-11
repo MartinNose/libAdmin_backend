@@ -9,6 +9,7 @@ function addMapping(router, mapping) {
         } else if (url.startsWith('POST')) {
             let path = url.substring(5);
             router.post(path, mapping[url]);
+            console.log(mapping[url]);
             console.log(`register url mapping POST ${path}`);
         } else {
             console.log(`invalid url: ${url}`);
@@ -17,17 +18,16 @@ function addMapping(router, mapping) {
 }
 
 function addControllers(router, dir) {
-    let js_files = fs.readFileSync(__dirname + '/' + dir + '/').filter((f) => {
+    let files = fs.readdirSync(__dirname + '/' + dir);
+    let js_files = files.filter((f) => {
         return f.endsWith('.js');
     });
-    for (f in js_files) {
+    for (f of js_files) {
         console.log(`process controller: ${f}`);
         let mapping = require(__dirname + '/' + dir + '/' + f);
         addMapping(router, mapping);
     }
 }
-
-addControllers(router);
 
 module.exports = (dir) => {
     let controllers_dir = dir || 'controllers';
