@@ -23,6 +23,7 @@
   "homepage": "https://github.com/MartinNose/DBS_libmanage_backend#readme",
   "dependencies": {
     "koa": "^2.11.0",
+    "koa-bodyparser": "^4.3.0",
     "koa-router": "7.0.0"
   }
 }
