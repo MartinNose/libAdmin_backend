@@ -1,0 +1,28 @@
+{
+  "name": "dbs_libmanage_backend",
+  "version": "1.0.0",
+  "description": "simple backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartinNose/DBS_libmanage_backend.git"
+  },
+  "keywords": [
+    "backend",
+    "sequelize",
+    "koa"
+  ],
+  "author": "MartinNose",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MartinNose/DBS_libmanage_backend/issues"
+  },
+  "homepage": "https://github.com/MartinNose/DBS_libmanage_backend#readme",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-router": "7.0.0"
+  }
+}
