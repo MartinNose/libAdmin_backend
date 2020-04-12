@@ -9,7 +9,6 @@ function addMapping(router, mapping) {
         } else if (url.startsWith('POST')) {
             let path = url.substring(5);
             router.post(path, mapping[url]);
-            console.log(mapping[url]);
             console.log(`register url mapping POST ${path}`);
         } else {
             console.log(`invalid url: ${url}`);

@@ -13,6 +13,9 @@ let fn_signin = async (ctx, next) => {
     console.log(`signin with name: ${name}, password: ${password}`);
     if (name === 'koa' && password === '12345') {
         ctx.response.body = `<h1>Welcome, ${name}!`;
+        ctx.db = {bno: "12345",
+            name: "Numeric Analysis 9th Edition"            
+        }
     } else {
         ctx.response.body = `<h1>Login failed</h1>
         <p><a href="/">Try again</a></p>`;
