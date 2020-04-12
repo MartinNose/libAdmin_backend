@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     const card = sequelize.define('card', {
         cno: {
             type: DataTypes.STRING(10),
-            primarykey: true
+            primaryKey: true
         },
         name: DataTypes.STRING(45),
         department: DataTypes.STRING(45),
@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
                 isIn: [['T','S']]
             }
         }
-    }, {}
+    }, {timestamps: false}
     )
     card.associate = function(models) {
-        // associations can be defined here
+        card.hasMany(models.borrow);
     };
     return card;
 }

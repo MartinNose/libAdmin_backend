@@ -1,11 +1,11 @@
 'use strict';
-const card = require('./card');
-const book = require('./book');
 module.exports = (sequelize, DataTypes) => {
-    const borrows = sequelize.define('borrows', {
+    const card = sequelize.card;
+    const book = sequelize.book;
+    const borrow = sequelize.define('borrow', {
         bno: {
             type: DataTypes.STRING(10),
-            primarykey: true,
+            primaryKey: true,
             reference: {
                 model: book,
                 id: 'bno'
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         cno :{
             type: DataTypes.STRING(10),
-            primarykey: true,
+            primaryKey: true,
             reference: {
                 model: card,
                 id: 'cno'
@@ -27,10 +27,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(10),
             isDate: true
         },
-    }, {}
+    }, {timestamps: false}
     )
-    borrows.associate = function(models) {
+    borrow.associate = function(models) {
         // associations can be defined here
     };
-    return borrows;
+    return borrow;
 }
