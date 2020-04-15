@@ -1,4 +1,4 @@
-let search = (ctx, next) => {
+let search = async (ctx, next) => {
     // let type = ctx.request.
     // 返回JSON数组
 }
