@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             isDate: true
         },
         author: DataTypes.STRING(45),
+        price: DataTypes.INTEGER,
         total: DataTypes.INTEGER,
         stock: DataTypes.INTEGER
     }, {timestamps: false});
