@@ -11,7 +11,7 @@ app.use(async (ctx, next) => {
 })
 
 app.use(bodyParser());
-// app.use(cors);
+app.use(cors());
 app.use(controller());
 
 app.listen(3000);
