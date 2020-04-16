@@ -10,6 +10,10 @@ function addMapping(router, mapping) {
             let path = url.substring(5);
             router.post(path, mapping[url]);
             console.log(`register url mapping POST ${path}`);
+        } else if (url.startsWith('DELETE')) {
+            let path = url.substring(7);
+            router.delete(path, mapping[url]);
+            console.log(`register url mapping DELETE ${path}`);
         } else {
             console.log(`invalid url: ${url}`);
         }
