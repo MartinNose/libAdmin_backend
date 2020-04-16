@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {timestamps: false}
     )
     card.associate = function(models) {
-        card.hasMany(models.borrow);
+
     };
     return card;
 }

@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         stock: DataTypes.INTEGER
     }, {timestamps: false});
     book.associate = function(models) {
-        book.hasMany(models.borrow);
+
     };
 
     return book;

@@ -30,7 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {timestamps: false}
     )
     borrow.associate = function(models) {
-        // associations can be defined here
+        borrow.belongsTo(models.book, {foreignKey: 'bno'});
+        borrow.belongsTo(models.card, {foreignKey: 'cno'});
     };
     return borrow;
 }
