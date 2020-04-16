@@ -15,28 +15,6 @@ let instCd = async (ctx, next) => {
     });
 }
 
-let cardsErr = []
-
-let insertCards = async (cards) => {
-    for (c of cards) {
-        await Card.create(c)
-        .then(card => console.log(card))
-        .catch((err) => cardsErr.push(err.errors[0]));
-    }
-}
-
-let instCds = async (ctx, next) => {
-    await insertCards(ctx.request.body.cards)
-    if (cardsErr.length === 0) {
-        ctx.response.status = 200
-    } else {
-        ctx.response.status = 500;
-        ctx.response.body = {
-            err: cardsErr
-        }
-    } 
-}
-
 let cancel = async (ctx, next) => {
     console.log("deleting")
     let body = ctx.request.body;
@@ -86,6 +64,5 @@ let cancel = async (ctx, next) => {
 
 module.exports = {
     "POST /api/register" : instCd,
-    // "POST /api/insertCards": instCds
     "DELETE /api/cancel": cancel
 }
