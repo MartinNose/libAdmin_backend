@@ -2,9 +2,7 @@
 let db = require('../Models');
 let Book = db.book;
 let Borrow = db.borrow; 
-let Card = db.card;
 let sequelize = db.sequelize;
-let Op = require('sequelize').Op;
 
 let check = async (ctx) => {
     const bno = ctx.request.body.bno;
