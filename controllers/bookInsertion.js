@@ -1,7 +1,6 @@
 const db = require('../Models');
 let Book = db.book;
 let instBk = async (ctx, next) => {
-    let newbk;
     await Book.create(ctx.request.body)
     .then(newbook => {
         newbk = newbook;
