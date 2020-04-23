@@ -23,7 +23,7 @@ function newquery(con) {
     validCheck(con);
     for (let i of Query) {
         console.log(i)
-        if (!con.hasOwnProperty(i) || con[i] === '');
+        if (!con.hasOwnProperty(i) || con[i] === '') continue;
         switch(i) {
             case 'start': 
                 if (!where.hasOwnProperty('year')) {
@@ -82,5 +82,5 @@ let search = async (ctx, next) => {
 }
 
 module.exports = {
-    'GET /api/search': search
+    'POST /api/search': search
 }
