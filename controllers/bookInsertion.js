@@ -16,24 +16,31 @@ let instBk = async (ctx, next) => {
     });
 }
 
-let booksErr = []
+
 
 let insertBooks = async (books) => {
+    let result = {
+        booksErr:[],
+        books:[]
+    }
     for (b of books) {
         await Book.create(b)
-        .then(book => console.log(book))
-        .catch((err) => booksErr.push(err.errors[0]));
+        .then(book => result.books.push(book))
+        .catch((err) => result.booksErr.push(err.message));
     }
+    return result
 }
 
 let instBks = async (ctx, next) => {
-    await insertBooks(ctx.request.body.books)
-    if (booksErr.length === 0) {
+    console.log(ctx.request.body)
+    let result = await insertBooks(ctx.request.body)
+    if (result.booksErr.length === 0) {
         ctx.response.status = 200
+        ctx.response.body = result.books
     } else {
         ctx.response.status = 500;
         ctx.response.body = {
-            err: booksErr
+            err: result.booksErr
         }
     } 
 }

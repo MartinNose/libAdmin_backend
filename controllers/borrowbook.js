@@ -31,10 +31,15 @@ let curBk = async (ctx, next) => {
 let checkBr = async (ctx) => {
     const bno = ctx.request.body.bno;
     const cno = ctx.request.body.cno;
+
+    
+    
     try {
         if (!ctx.request.body.hasOwnProperty('bno') || !ctx.request.body.hasOwnProperty('cno')) {
             throw new Error('Invalid Query');
         }
+        let res = await Borrow.findOne({where:{bno:bno, cno:cno}})
+        if (res) throw new Error('Duplicated record found') 
 
         await Card.findAll({where: {cno: cno}}).then(res => {
             if (res.length === 0) throw new Error('Invalid Card Number')
@@ -107,13 +112,13 @@ let borrowBk = async (ctx, next) => {
             console.log(err.message)
             ctx.response.status = 400
             ctx.response.body = {
-                err: 'Borrow rejected due to technical reasons'
+                err: 'Borrow rejected'
             }
         })
 }
 
 module.exports = {
-    'GET /api/curBk': curBk,
-    'POST /api/borrowBk': borrowBk
+    'POST /api/curBk': curBk,
+    'POST /api/borrow': borrowBk
 }
 

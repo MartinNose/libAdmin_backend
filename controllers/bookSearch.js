@@ -3,7 +3,7 @@ let db = require('../Models');
 let sequelize = require('sequelize');
 let Op = sequelize.Op;
 let Book = db.book;
-let Query = ["category","bookname","start","end","author","low","high"]
+let Query = ["category","title","start","end","author","low","high"]
 
 function validCheck(con) {
     for (let i in con) {
@@ -59,7 +59,7 @@ function newquery(con) {
 
 let search = async (ctx, next) => {
     let where = {}
-
+    console.log(ctx.request.body)
     try {
         where = newquery(ctx.request.body);
     } catch(e) {

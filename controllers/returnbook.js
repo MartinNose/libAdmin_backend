@@ -16,6 +16,11 @@ let check = async (ctx) => {
             if (res.length === 0) throw new Error('No records found')
         })
 
+        await Book.findOne({where:{bno:bno}})
+        .then(book => {
+            if(!book) throw new Error ('Book Number not found')
+        })
+
     } catch (e) {
         ctx.response.status = 400
         ctx.response.body = {
@@ -59,11 +64,11 @@ let returnBk = async (ctx, next) => {
             console.log(err.message)
             ctx.response.status = 400
             ctx.response.body = {
-                err: 'Borrow rejected due to technical reasons'
+                err: 'Error Rejected'
             }
         })
 }
 
 module.exports = {
-    'POST /api/returnBk': returnBk
+    'POST /api/return': returnBk
 }
