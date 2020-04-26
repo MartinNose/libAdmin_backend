@@ -1,5 +1,6 @@
 const db = require('../Models');
 let Card = db.card;
+let Borrow = db.borrow;
 let instCd = async (ctx, next) => {
     console.log(ctx.request.body)
     await Card.create(ctx.request.body)
@@ -26,41 +27,25 @@ let cancel = async (ctx, next) => {
         }
     }
     const cno = body.cno;
-    await Card.findAll({where: {cno: cno}})
-        .then(async cards => {
-            switch(cards.length){
-            case 1: 
-                const card = cards[0];
-                await card.destroy().then((del) => {
-                    ctx.response.status = 200
-                    ctx.response.body = {
-                        deleted: del
-                    }
-                }).catch(err => {
-                    ctx.response.status = 500
-                    ctx.response.body = {
-                        err: err.message
-                    }
-                });
-                break;
-            case 0:
-                ctx.response.status = 500
-                ctx.response.body = {
-                    err: "Not Found"
-                }
-                break;
-            default:
-                ctx.response.status = 500
-                ctx.response.body = {
-                    err: "Internal Error"
-                }
-            }
-        }).catch(err => {
-            ctx.response.status = 400
-            ctx.response.body = {
-                err: err.message
-            }
-        })
+    const record = await Borrow.findOne({where:{cno:cno}})
+    if (record) {
+        ctx.response.status = 400
+        ctx.response.body = {
+            err: "User having books not returned"
+        }
+        return
+    }
+    const card = await Card.findOne({where: {cno: cno}})
+    if (card) {
+        await card.destroy()
+        ctx.response.status = 200
+        ctx.response.body = {}
+    } else {
+        ctx.response.status = 400
+        ctx.response.body = {
+            err: "No such card number"
+        }
+    }
 }
 
 cardin = async (ctx, next) => {
@@ -88,5 +73,5 @@ module.exports = {
     "GET /api/allcard": allcard,
     "POST /api/cardin": cardin,
     "POST /api/register" : instCd,
-    "DELETE /api/cancel": cancel
+    "POST /api/cancel": cancel
 }
