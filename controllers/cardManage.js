@@ -27,25 +27,19 @@ let cancel = async (ctx, next) => {
         }
     }
     const cno = body.cno;
-    const record = await Borrow.findOne({where:{cno:cno}})
-    if (record) {
-        ctx.response.status = 400
-        ctx.response.body = {
-            err: "User having books not returned"
+    await Card.findOne({where: {cno: cno}}).then(async card => {
+        if (card) {
+            await card.destroy().then(()=>{
+                ctx.response.status = 200
+                ctx.response.body = {}
+            }).catch(e => {
+                ctx.response.status = 400
+                ctx.response.body = {
+                    err: "User having books not returned"
+                }
+            })
         }
-        return
-    }
-    const card = await Card.findOne({where: {cno: cno}})
-    if (card) {
-        await card.destroy()
-        ctx.response.status = 200
-        ctx.response.body = {}
-    } else {
-        ctx.response.status = 400
-        ctx.response.body = {
-            err: "No such card number"
-        }
-    }
+    })
 }
 
 cardin = async (ctx, next) => {
